@@ -1,0 +1,38 @@
+{
+    "name": "rapidez/postcodeservice",
+    "description": "Rapidez Postcodeservice",
+    "keywords": [
+        "rapidez"
+    ],
+    "homepage": "https://rapidez.io",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Roy Duineveld",
+            "email": "royduineveld@gmail.com",
+            "homepage": "https://royduineveld.nl",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.0|^8.1",
+        "laravel/framework": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rapidez\\Postcodeservice\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rapidez\\Postcodeservice\\RapidezPostcodeserviceServiceProvider"
+            ]
+        }
+    }
+}
