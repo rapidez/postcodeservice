@@ -16,7 +16,6 @@ class RapidezPostcodeserviceServiceProvider extends ServiceProvider
     public function boot()
     {
         $this
-            ->bootViews()
             ->bootRoutes()
             ->bootPublishables()
             ->bootMacros();
@@ -25,13 +24,6 @@ class RapidezPostcodeserviceServiceProvider extends ServiceProvider
     public function registerConfig() : self
     {
         $this->mergeConfigFrom(__DIR__.'/../config/rapidez-postcodeservice.php', 'rapidez-postcodeservice');
-
-        return $this;
-    }
-
-    public function bootViews() : self
-    {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'rapidez-postcodeservice');
 
         return $this;
     }
@@ -45,10 +37,6 @@ class RapidezPostcodeserviceServiceProvider extends ServiceProvider
 
     public function bootPublishables() : self
     {
-        $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/rapidez-postcodeservice'),
-        ], 'views');
-
         $this->publishes([
             __DIR__.'/../config/rapidez-postcodeservice.php' => config_path('rapidez-postcodeservice.php'),
         ], 'config');
