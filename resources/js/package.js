@@ -15,7 +15,7 @@ async function getAddressFromPostcodeservice(type) {
         return
     }
 
-    let response = await window.axios.post('/api/postcodeservice', {
+    let response = await window.axios.post(window.url('/api/postcodeservice'), {
         postcode: window.app.checkout[type].postcode,
         housenumber: window.app.checkout[type].street[1],
     }, {
