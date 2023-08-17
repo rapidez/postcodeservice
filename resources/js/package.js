@@ -25,6 +25,10 @@ async function getAddressFromPostcodeservice(type) {
     })
 
     if (!response.data?.city || !response.data?.street) {
+        if (response.data?.error == "Postcode not found") {
+            window.app.checkout[type].city = ''
+            window.app.checkout[type].street[0] = ''
+        }
         return
     }
 
