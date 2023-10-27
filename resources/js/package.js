@@ -26,16 +26,22 @@ document.addEventListener('turbo:load', function () {
 })
 
 async function getAddressFromPostcodeservice(id) {
-    let get = ((type) => window.app.custom.postcode_data[`${id}_${type}`])
-    let set = ((type, value) => {
-        let el = document.getElementById(`${id}_${type}`)
+    let get = (type) => window.app.custom.postcode_data[`${id}_${type}`]
+    let elm = (type) => document.getElementById(`${id}_${type}`)
+    let set = (type, value) => {
+        let el = elm(type)
         if (el) {
             el.value = value
             el.dispatchEvent(new Event('change'))
         }
-    })
+    }
 
-    if (get('country') != 'NL' || !get('postcode')) {
+    if (get('country') != 'NL'
+        || !get('postcode')
+        || !elm('housenumber')
+        || !elm('city')
+        || !elm('street')
+    ) {
         return
     }
 
