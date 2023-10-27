@@ -1,23 +1,47 @@
-document.addEventListener('turbo:load', function () {
-    ['shipping_address', 'billing_address'].forEach((type) => {
-        window.app.$watch('checkout.'+type+'.postcode', function () {
-            getAddressFromPostcodeservice(type)
-        })
+const postcodeObserver = new MutationObserver((m) => {
+    let types = ['housenumber', 'postcode', 'country']
+    types.forEach((type) => {
+        document.querySelectorAll(`[id\$='_${type}']`).forEach(el => {
+            if (el.id in window.app.custom.postcode_data) {
+                return
+            }
 
-        window.app.$watch('checkout.'+type+'.street.1', function () {
-            getAddressFromPostcodeservice(type)
+            window.app.custom.postcode_data[el.id] = el.value
+            let id = el.id.replace(`_${type}`, '')
+            el.addEventListener('change', () => {
+                window.app.custom.postcode_data[el.id] = el.value
+                getAddressFromPostcodeservice(id)
+            })
         })
     })
 })
 
-async function getAddressFromPostcodeservice(type) {
-    if (window.app.checkout[type].country_id != 'NL') {
+document.addEventListener('turbo:load', function () {
+    window.app.custom.postcode_data = {}
+
+    postcodeObserver.observe(window.app.$el, {
+        childList: true,
+        subtree: true,
+    })
+})
+
+async function getAddressFromPostcodeservice(id) {
+    let get = ((type) => window.app.custom.postcode_data[`${id}_${type}`])
+    let set = ((type, value) => {
+        let el = document.getElementById(`${id}_${type}`)
+        if (el) {
+            el.value = value
+            el.dispatchEvent(new Event('change'))
+        }
+    })
+
+    if (get('country') != 'NL' || !get('postcode')) {
         return
     }
 
-    let response = await window.axios.post(window.url('/api/postcodeservice'), {
-        postcode: window.app.checkout[type].postcode,
-        housenumber: window.app.checkout[type].street[1],
+    let response = await window.axios.post('/api/postcodeservice', {
+        postcode: get('postcode'),
+        housenumber: get('housenumber'),
     }, {
         headers: {
             accept: 'application/json',
@@ -25,13 +49,13 @@ async function getAddressFromPostcodeservice(type) {
     })
 
     if (!response.data?.city || !response.data?.street) {
-        if (response.data?.error == "Postcode not found") {
-            window.app.checkout[type].city = ''
-            window.app.checkout[type].street[0] = ''
+        if (response.data?.error == 'Postcode not found') {
+            set('city', '')
+            set('street', '')
         }
         return
     }
 
-    window.app.checkout[type].city = response.data.city
-    window.app.checkout[type].street[0] = response.data.street
+    set('city', response.data.city)
+    set('street', response.data.street)
 }
