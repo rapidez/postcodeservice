@@ -1,4 +1,4 @@
-const postcodeObserver = new MutationObserver((m) => {
+const postcodeObserver = new MutationObserver(() => {
     let types = ['housenumber', 'postcode', 'country']
     types.forEach((type) => {
         document.querySelectorAll(`[id\$='_${type}']`).forEach(el => {
