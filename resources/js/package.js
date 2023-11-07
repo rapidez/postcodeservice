@@ -1,4 +1,6 @@
-const postcodeObserver = new MutationObserver(() => {
+import { useThrottleFn } from "@vueuse/core"
+
+const postcodeObserver = new MutationObserver(useThrottleFn(() => {
     let types = ['housenumber', 'postcode', 'country']
     types.forEach((type) => {
         document.querySelectorAll(`[id\$='_${type}']`).forEach(el => {
@@ -14,7 +16,7 @@ const postcodeObserver = new MutationObserver(() => {
             })
         })
     })
-})
+}, 500, true, true))
 
 document.addEventListener('turbo:load', function () {
     window.app.custom.postcode_data = {}
