@@ -3,7 +3,7 @@ import { useThrottleFn } from "@vueuse/core"
 const postcodeObserver = new MutationObserver(useThrottleFn(() => {
     let types = ['housenumber', 'postcode', 'country']
     types.forEach((type) => {
-        document.querySelectorAll(`[id\$='_${type}']`).forEach(el => {
+        document.querySelectorAll(`[id\$='_${type}']:not([no-postcode])`).forEach(el => {
             if (el.id in window.app.custom.postcode_data) {
                 return
             }
@@ -28,28 +28,28 @@ document.addEventListener('turbo:load', function () {
 })
 
 async function getAddressFromPostcodeservice(id) {
-    let get = (type) => window.app.custom.postcode_data[`${id}_${type}`]
-    let elm = (type) => document.getElementById(`${id}_${type}`)
-    let set = (type, value) => {
-        let el = elm(type)
-        if (el) {
+    let getDataFrom = (type) => window.app.custom.postcode_data[`${id}_${type}`]
+    let getElement = (type) => document.getElementById(`${id}_${type}`)
+    let setDataTo = (type, value) => {
+        let el = getElement(type)
+        if (el && el.value != value) {
             el.value = value
             el.dispatchEvent(new Event('change'))
         }
     }
 
-    if (get('country') != 'NL'
-        || !get('postcode')
-        || !elm('housenumber')
-        || !elm('city')
-        || !elm('street')
+    if (getDataFrom('country') != 'NL'
+        || !getDataFrom('postcode')
+        || !getElement('housenumber')
+        || !getElement('city')
+        || !getElement('street')
     ) {
         return
     }
 
     let response = await window.axios.post('/api/postcodeservice', {
-        postcode: get('postcode'),
-        housenumber: get('housenumber'),
+        postcode: getDataFrom('postcode'),
+        housenumber: getDataFrom('housenumber'),
     }, {
         headers: {
             accept: 'application/json',
@@ -58,12 +58,12 @@ async function getAddressFromPostcodeservice(id) {
 
     if (!response.data?.city || !response.data?.street) {
         if (response.data?.error == 'Postcode not found') {
-            set('city', '')
-            set('street', '')
+            setDataTo('city', '')
+            setDataTo('street', '')
         }
         return
     }
 
-    set('city', response.data.city)
-    set('street', response.data.street)
+    setDataTo('city', response.data.city)
+    setDataTo('street', response.data.street)
 }
