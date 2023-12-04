@@ -3,7 +3,7 @@ import { useThrottleFn } from "@vueuse/core"
 const postcodeObserver = new MutationObserver(useThrottleFn(() => {
     let types = ['housenumber', 'postcode', 'country']
     types.forEach((type) => {
-        document.querySelectorAll(`[id\$='_${type}']:not([no-postcode])`).forEach(el => {
+        document.querySelectorAll(`[id\$='_${type}']:not([no-postcode]), [name\$='_${type}']:not([no-postcode])`).forEach(el => {
             if (el.id in window.app.custom.postcode_data) {
                 return
             }
