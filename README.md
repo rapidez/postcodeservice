@@ -16,6 +16,34 @@ POSTCODESERVICE_CLIENT_ID=
 POSTCODESERVICE_SECURE_CODE=
 ```
 
+## Customisation
+
+In case you have your own postcode fields you want checked and updated you can emit the `postcode-change` event passing a reactive object with the following keys:
+    - country_id/country_code
+    - postcode
+    - street[0]
+    - street[1]
+    - city
+
+then you can use it like:
+```html
+<input 
+    v-on:change="window.app.$emit('postcode-change', addressVariables)" 
+    name="postcode" 
+    label="Postcode" 
+    v-model="addressVariables.postcode" 
+    required
+/>
+<input 
+    v-on:change="window.app.$emit('postcode-change', addressVariables)" 
+    name="street[1]" 
+    type="number" 
+    label="Housenumber" 
+    v-model="addressVariables.street[1]" 
+    placeholder=""
+/>
+```
+
 ## Note
 
 Currently only Dutch address completion is implemented!
