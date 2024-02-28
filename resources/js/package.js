@@ -2,20 +2,6 @@ import { set, useDebounceFn, useMemoize } from "@vueuse/core";
 
 document.addEventListener('turbo:load', function () {
     window.app.$on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100));
-
-    ['shipping_address', 'billing_address'].forEach((type) => {
-        window.app.$watch('checkout.'+type+'.postcode', function () {
-            window.app.$emit('postcode-change', window.app.checkout[type])
-        })
-
-        window.app.$watch('checkout.'+type+'.street.1', function () {
-            window.app.$emit('postcode-change', window.app.checkout[type])
-        })
-
-        window.app.$watch('checkout.'+type+'.country_id', function () {
-            window.app.$emit('postcode-change', window.app.checkout[type])
-        })
-    })
 })
 
 const getAddressFromPostcodeservice = useMemoize(
