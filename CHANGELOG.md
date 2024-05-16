@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/1.0.0...master)
+[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/2.0.0...master)
+## [2.0.0](https://github.com/rapidez/postcodeservice/releases/tag/2.0.0) - 2024-05-16
+
+### Added
+
+- PHP 8.2 and Rapidez v2 support (c3f1b78)
+
 ## [1.0.0](https://github.com/rapidez/postcodeservice/releases/tag/1.0.0) - 2024-02-28
 
 When upgrading to this version you've to make sure the `postcode-change` event gets triggered, see: https://github.com/rapidez/postcodeservice#customisation
