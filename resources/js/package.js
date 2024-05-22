@@ -6,14 +6,14 @@ document.addEventListener('turbo:load', function () {
 
 const getAddressFromPostcodeservice = useMemoize(
     async function (postcode, housenumber) {
-        return window.axios.post(window.url('/api/postcodeservice'), {
-            postcode: postcode,
-            housenumber: housenumber,
-        }, {
-            headers: {
-                accept: 'application/json',
+        return window.rapidezAPI(
+            'post',
+            'postcodeservice', 
+            {
+                postcode: postcode,
+                housenumber: housenumber,
             }
-        })
+        )
     }
 )
 
@@ -28,14 +28,14 @@ async function updateAddressFromPostcodeservice(address) {
 
     let response = await getAddressFromPostcodeservice(address.postcode, address?.housenumber || address.street[1])
 
-    if (!response.data?.city || !response.data?.street) {
-        if (response.data?.error == "Postcode not found") {
+    if (!response?.city || !response?.street) {
+        if (response?.error == "Postcode not found") {
             set(address, 'city', '')
             set(address.street, 0, '')
         }
         return
     }
 
-    set(address, 'city', response.data.city)
-    set(address.street, 0, response.data.street)
+    set(address, 'city', response.city)
+    set(address.street, 0, response.street)
 }
