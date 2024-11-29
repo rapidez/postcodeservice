@@ -1,6 +1,6 @@
 import { set, useDebounceFn, useMemoize } from "@vueuse/core";
 
-document.addEventListener('turbo:load', function () {
+document.addEventListener('vue:loaded', function () {
     window.app.$on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100));
 })
 
