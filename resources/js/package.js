@@ -1,14 +1,14 @@
-import { set, useDebounceFn, useMemoize } from "@vueuse/core";
+import { useDebounceFn, useMemoize } from "@vueuse/core";
 
 document.addEventListener('vue:loaded', function () {
-    window.app.$on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100));
+    window.$on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100));
 })
 
 const getAddressFromPostcodeservice = useMemoize(
     async function (postcode, housenumber) {
         return window.rapidezAPI(
             'post',
-            'postcodeservice', 
+            'postcodeservice',
             {
                 postcode: postcode,
                 housenumber: housenumber,
@@ -30,12 +30,12 @@ async function updateAddressFromPostcodeservice(address) {
 
     if (!response?.city || !response?.street) {
         if (response?.error == "Postcode not found") {
-            set(address, 'city', '')
-            set(address.street, 0, '')
+            address.city = ''
+            address.street[0] = ''
         }
         return
     }
 
-    set(address, 'city', response.city)
-    set(address.street, 0, response.street)
+    address.city = response.city
+    address.street[0] = response.street
 }
