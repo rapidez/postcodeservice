@@ -1,8 +1,5 @@
 import { useDebounceFn, useMemoize } from "@vueuse/core";
-
-document.addEventListener('vue:loaded', function () {
-    window.$on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100));
-})
+import { on } from 'Vendor/rapidez/core/resources/js/polyfills/emit.js'
 
 const getAddressFromPostcodeservice = useMemoize(
     async function (postcode, housenumber) {
@@ -39,3 +36,5 @@ async function updateAddressFromPostcodeservice(address) {
     address.city = response.city
     address.street[0] = response.street
 }
+
+on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100), { autoremove: false })
