@@ -40,7 +40,7 @@ Then you can use it like:
     v-on:change="window.$emit('postcode-change', addressVariables)"
     name="street[1]"
     type="number"
-    label="Housenumber"
+    label="House number"
     v-model="addressVariables.street[1]"
     placeholder=""
 />
