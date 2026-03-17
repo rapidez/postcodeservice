@@ -6,7 +6,7 @@ Route::middleware('api')->match(['get', 'post'], '/api/postcodeservice', functio
     $request->merge([
         'postcode' => strtoupper(str_replace(' ', '', $request->postcode)),
     ])->validate([
-        'postcode' => 'required|string|max:6',
+        'postcode' => 'required|string|size:6',
         'housenumber' => 'required',
     ]);
 
