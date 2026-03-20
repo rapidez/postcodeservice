@@ -1,6 +1,21 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/4.0.0...master)
+[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/5.0.0...master)
+## [5.0.0](https://github.com/rapidez/postcodeservice/releases/tag/5.0.0) - 2026-03-20
+
+### Added
+
+- Rapidez v5 support (#10)
+- Regex validation (#9)
+
+### Changed
+
+- Vue 3 upgrade (#7)
+
+### Fixed
+
+- Form label spelling fixes (#8)
+
 ## [4.0.0](https://github.com/rapidez/postcodeservice/releases/tag/4.0.0) - 2025-06-05
 
 ### Added 
