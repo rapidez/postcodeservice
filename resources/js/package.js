@@ -14,7 +14,7 @@ const getAddressFromPostcodeservice = useMemoize(
     }
 )
 
-async function updateAddressFromPostcodeservice(address) {
+async function updateAddressFromPostcodeservice(address, event) {
     if ((address?.country_id || address?.country_code) != 'NL') {
         return
     }
@@ -35,6 +35,7 @@ async function updateAddressFromPostcodeservice(address) {
 
     address.city = response.city
     address.street[0] = response.street
+    event?.target?.parentElement?.dispatchEvent?.(new Event('change', {bubbles: true}));
 }
 
 on('postcode-change', useDebounceFn(updateAddressFromPostcodeservice, 100), { autoremove: false })
