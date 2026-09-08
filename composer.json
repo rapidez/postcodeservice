@@ -1,6 +1,7 @@
 {
     "name": "rapidez/postcodeservice",
     "description": "Rapidez Postcodeservice",
+    "abandoned": "rapidez/postcode",
     "keywords": [
         "rapidez"
     ],
