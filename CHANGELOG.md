@@ -1,6 +1,15 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/5.0.0...master)
+[Unreleased changes](https://github.com/rapidez/postcodeservice/compare/5.0.1...master)
+## [5.0.1](https://github.com/rapidez/postcodeservice/releases/tag/5.0.1) - 2026-09-08
+
+> [!WARNING]
+> Deprecated! Use https://github.com/rapidez/postcode
+
+### Fixed
+
+- Dispatch change event on parent if address updated (#11)
+
 ## [5.0.0](https://github.com/rapidez/postcodeservice/releases/tag/5.0.0) - 2026-03-20
 
 ### Added
